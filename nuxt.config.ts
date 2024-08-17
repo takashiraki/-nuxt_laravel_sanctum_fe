@@ -14,7 +14,18 @@ export default defineNuxtConfig({
     "/auth/**": { ssr: false },
   },
 
-  modules: ["nuxt-sanctum-auth", "@nuxtjs/tailwindcss"],
+  modules: ["nuxt-sanctum-auth", "@nuxtjs/tailwindcss", "shadcn-nuxt"],
+  shadcn: {
+    /**
+     * Prefix for all the imported component
+     */
+    prefix: "",
+    /**
+     * Directory that the component lives in.
+     * @default "./components/ui"
+     */
+    componentDir: "./components/ui",
+  },
   nuxtSanctumAuth: {
     token: false,
     baseUrl: process.env.NUXT_PUBLIC_API_BASE || "http://localhost:8080",
