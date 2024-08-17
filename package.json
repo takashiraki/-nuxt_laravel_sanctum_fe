@@ -13,5 +13,8 @@
     "nuxt": "^3.12.4",
     "nuxt-sanctum-auth": "^0.4.10",
     "vue": "latest"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4"
   }
 }
