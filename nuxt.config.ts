@@ -2,12 +2,43 @@
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
+  css: ["~/assets/css/main.css"],
+  components: [
+    {
+      path: "./components",
+      pathPrefix: false,
+    },
+  ],
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
+  },
   routeRules: {
     "/account/**": { ssr: false },
     "/auth/**": { ssr: false },
   },
 
-  modules: ["nuxt-sanctum-auth"],
+  runtimeConfig: {
+    apiKey: "",
+    public: {
+      apiBase: "",
+    },
+  },
+
+  modules: ["nuxt-sanctum-auth", "@nuxtjs/tailwindcss", "shadcn-nuxt"],
+  shadcn: {
+    /**
+     * Prefix for all the imported component
+     */
+    prefix: "",
+    /**
+     * Directory that the component lives in.
+     * @default "./components/ui"
+     */
+    componentDir: "./components/ui",
+  },
   nuxtSanctumAuth: {
     token: false,
     baseUrl: process.env.NUXT_PUBLIC_API_BASE || "http://localhost:8080",
@@ -24,7 +55,7 @@ export default defineNuxtConfig({
     },
     redirects: {
       home: "/home",
-      login: "/auth/login",
+      login: "/auth/signin",
       logout: "/",
     },
   },
