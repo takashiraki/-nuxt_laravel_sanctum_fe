@@ -7,6 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
+
+definePageMeta({
+  middleware: "guest",
+});
 </script>
 <template>
   <div class="h-screen flex justify-center items-center">
