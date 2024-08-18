@@ -20,6 +20,13 @@ export default defineNuxtConfig({
     "/auth/**": { ssr: false },
   },
 
+  runtimeConfig: {
+    apiKey: "",
+    public: {
+      apiBase: "",
+    },
+  },
+
   modules: ["nuxt-sanctum-auth", "@nuxtjs/tailwindcss", "shadcn-nuxt"],
   shadcn: {
     /**
@@ -48,7 +55,7 @@ export default defineNuxtConfig({
     },
     redirects: {
       home: "/home",
-      login: "/auth/login",
+      login: "/auth/signin",
       logout: "/",
     },
   },
