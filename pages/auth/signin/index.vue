@@ -85,13 +85,11 @@ const login = handleSubmit(async (values) => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Alert variant="destructive" class="mb-4" v-if="credentialError">
-          <AlertCircle class="w-4 h-4" />
-          <AlertTitle>Error</AlertTitle>
-          <AlertDescription>
-            Your session has expired. Please log in again.
-          </AlertDescription>
-        </Alert>
+        <Alertbox
+          v-if="credentialError"
+          title="Error"
+          description="Your session has expired. Please log in again."
+        />
         <form v-on:submit.prevent="login">
           <div class="grid gap-4">
             <div class="grid gap-2">
