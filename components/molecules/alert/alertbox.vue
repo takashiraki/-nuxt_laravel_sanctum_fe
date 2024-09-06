@@ -1,10 +1,7 @@
 <script setup lang="ts">
-interface propsItem {
-  title: string;
-  description: string;
-}
+import type { AlertItemInterface } from "~/types/alert/AlertItemInterface";
 
-const props = defineProps<propsItem>();
+const props = defineProps<AlertItemInterface>();
 </script>
 <template>
   <div>
