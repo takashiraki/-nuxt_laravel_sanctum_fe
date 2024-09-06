@@ -1,25 +1,8 @@
 <script setup lang="ts">
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { toTypedSchema } from "@vee-validate/zod";
 import { configure, useForm } from "vee-validate";
 import { z } from "zod";
 import SignInTemplate from "~/components/template/auth/signin/SignInTemplate.vue";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "~/components/ui/form";
 import type { CardItemInterface } from "~/types/card/CardItemInterface";
 import type { InputItemInterface } from "~/types/form/InputItemInterface";
 
