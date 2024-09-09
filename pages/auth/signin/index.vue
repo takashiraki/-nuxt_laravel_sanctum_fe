@@ -1,145 +1,64 @@
 <script setup lang="ts">
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { toTypedSchema } from "@vee-validate/zod";
-import { configure, useForm } from "vee-validate";
-import { z } from "zod";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "~/components/ui/form";
-
-import { AlertCircle } from "lucide-vue-next";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-
-configure({
-  validateOnBlur: false,
-  validateOnChange: false,
-});
+import SignInTemplate from "~/components/template/auth/signin/SignInTemplate.vue";
+import type { CardItemInterface } from "~/types/card/CardItemInterface";
+import type { InputItemInterface } from "~/types/form/InputItemInterface";
 
 definePageMeta({
   middleware: "guest",
 });
 
-const { $sanctumAuth } = useNuxtApp();
-
-const loadingStatus = ref(false);
-
-const credentialError = ref("");
-
-const formSchema = toTypedSchema(
-  z.object({
-    email: z.string().email().min(1).max(256),
-    password: z.string().min(3).max(256),
-  })
-);
-
-const { handleSubmit } = useForm({
-  validationSchema: formSchema,
-  initialValues: {
-    email: "",
-    password: "",
-  },
+useHead({
+  title: "Sign in",
 });
 
-const login = handleSubmit(async (values) => {
-  try {
-    loadingStatus.value = true;
-    credentialError.value = "";
-    await $sanctumAuth.login(
-      {
-        email: values.email,
-        password: values.password,
-      },
-      () => {
-        navigateTo({
-          path: "/home",
-        });
-      }
-    );
-  } catch (error: any) {
-    loadingStatus.value = false;
-    credentialError.value = "Credential error.";
-  }
+const cardItem: CardItemInterface = {
+  title: "Sign in",
+  description: "Enter your email below to login to your account",
+};
+
+const formItem: InputItemInterface[] = [
+  {
+    name: "email",
+    label: "Email",
+    type: "email",
+    placeholder: "m@examle.com",
+  },
+  {
+    name: "password",
+    label: "Password",
+    type: "password",
+    placeholder: null,
+  },
+];
+
+const inductionSignUp = {
+  title: "Don't have an account?",
+  description: "Sign up",
+  link: "/auth/signup",
+};
+
+const forgotPassword = {
+  title: "Forgot your password?",
+  link: "#",
+};
+
+const alertItem = ref({
+  alertItem: {
+    title: "Credential error",
+    description: "The email or password you entered is incorrect.",
+  },
+  status: false,
 });
 </script>
 
 <template>
   <div class="h-screen flex justify-center items-center">
-    <Card class="mx-auto max-w-sm">
-      <CardHeader>
-        <CardTitle class="text-2xl"> Sign in </CardTitle>
-        <CardDescription>
-          Enter your email below to login to your account
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Alert variant="destructive" class="mb-4" v-if="credentialError">
-          <AlertCircle class="w-4 h-4" />
-          <AlertTitle>Error</AlertTitle>
-          <AlertDescription>
-            Your session has expired. Please log in again.
-          </AlertDescription>
-        </Alert>
-        <form v-on:submit.prevent="login">
-          <div class="grid gap-4">
-            <div class="grid gap-2">
-              <FormField v-slot="{ componentField }" name="email">
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="email"
-                      placeholder="m@example.com"
-                      v-bind="componentField"
-                      required
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              </FormField>
-            </div>
-            <div class="grid gap-2">
-              <FormField v-slot="{ componentField }" name="password">
-                <FormItem>
-                  <FormLabel>
-                    <div class="flex items-center">
-                      <Label for="password">Password</Label>
-                      <a
-                        href="#"
-                        class="ml-auto inline-block text-sm underline"
-                      >
-                        Forgot your password?
-                      </a>
-                    </div>
-                  </FormLabel>
-                  <FormControl>
-                    <Input type="password" v-bind="componentField" required />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              </FormField>
-            </div>
-            <Button type="submit" class="w-full"> Login </Button>
-          </div>
-          <div class="mt-4 text-center text-sm">
-            Don't have an account?
-            <!-- <a href="#" class="underline"> Sign up </a> -->
-            <nuxt-link to="/auth/signup" class="underline">Sign up</nuxt-link>
-          </div>
-        </form>
-      </CardContent>
-    </Card>
+    <SignInTemplate
+      :card-item="cardItem"
+      :form-item="formItem"
+      :password-list-item="forgotPassword"
+      :induction-sign-up="inductionSignUp"
+      :alert-item="alertItem"
+    />
   </div>
 </template>
