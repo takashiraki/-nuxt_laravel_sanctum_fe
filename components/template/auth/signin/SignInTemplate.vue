@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useSignInFormState } from "~/composables/states/form/SignInFormState";
 import type { AlertItemInterface } from "~/types/alert/AlertItemInterface";
 import type { CardItemInterface } from "~/types/card/CardItemInterface";
 import type { InputItemInterface } from "~/types/form/InputItemInterface";
@@ -28,6 +29,8 @@ interface propsItem {
 }
 
 const props = defineProps<propsItem>();
+
+const signInFormState = useSignInFormState();
 </script>
 <template>
   <div>
@@ -38,11 +41,14 @@ const props = defineProps<propsItem>();
       />
       <CardContent>
         <Alertbox
-          v-if="props.alertItem.status"
+          v-if="signInFormState.signInFormState.value"
           :title="props.alertItem.alertItem.title"
           :description="props.alertItem.alertItem.description"
         />
-        <InputFormOrganisms :formItem="props.formItem" />
+        <InputFormOrganisms
+          :formItem="props.formItem"
+          :reset="props.passwordListItem"
+        />
         <div class="mt-4 text-center text-sm">
           {{ props.inductionSignUp.title }}
           <nuxt-link :to="props.inductionSignUp.link" class="underline">{{

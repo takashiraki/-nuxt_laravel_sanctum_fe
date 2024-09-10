@@ -2,10 +2,14 @@
 import { toTypedSchema } from "@vee-validate/zod";
 import { configure, useForm } from "vee-validate";
 import { z } from "zod";
+import { useButtonLoadingState } from "~/composables/states/button/loadingButtonState";
+import { useSignInFormState } from "~/composables/states/form/SignInFormState";
 import type { InputItemInterface } from "~/types/form/InputItemInterface";
+import type { passwordListItem } from "~/types/form/PasswordListItemINterface";
 
 const props = defineProps<{
   formItem: InputItemInterface[];
+  reset: passwordListItem;
 }>();
 
 configure({
@@ -15,7 +19,9 @@ configure({
 
 const { $sanctumAuth } = useNuxtApp();
 
-const loadingStatus = ref(false);
+const { setSignInFailed, resetSignInFormState } = useSignInFormState();
+
+const { setButtonLoading, resetButtonLoadingState } = useButtonLoadingState();
 
 const formSchema = toTypedSchema(
   z.object({
@@ -34,7 +40,8 @@ const { handleSubmit } = useForm({
 
 const login = handleSubmit(async (values) => {
   try {
-    loadingStatus.value = true;
+    resetSignInFormState();
+    setButtonLoading();
     await $sanctumAuth.login(
       {
         email: values.email,
@@ -47,7 +54,9 @@ const login = handleSubmit(async (values) => {
       }
     );
   } catch (error: any) {
-    loadingStatus.value = false;
+    setSignInFailed();
+  } finally {
+    resetButtonLoadingState();
   }
 });
 </script>
@@ -57,7 +66,8 @@ const login = handleSubmit(async (values) => {
       <div class="grid gap-4">
         <div v-for="(item, index) in props.formItem" :key="index">
           <div class="grid gap-2">
-            <InputForm :item="item" />
+            <InputForm :item="item" v-if="item.name !== 'password'" />
+            <SignInPassword :item="item" :reset="props.reset" v-else />
           </div>
         </div>
         <ButtonAtom :type="'submit'" :label="'Sign in'" :class="'w-full'" />
