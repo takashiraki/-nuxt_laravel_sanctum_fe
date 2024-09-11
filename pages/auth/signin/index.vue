@@ -39,7 +39,7 @@ const inductionSignUp = {
 
 const forgotPassword = {
   title: "Forgot your password?",
-  link: "#",
+  link: "/auth/forgot-password",
 };
 
 const alertItem = ref({
