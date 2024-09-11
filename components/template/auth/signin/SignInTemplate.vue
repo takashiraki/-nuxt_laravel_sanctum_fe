@@ -45,7 +45,7 @@ const signInFormState = useSignInFormState();
           :title="props.alertItem.alertItem.title"
           :description="props.alertItem.alertItem.description"
         />
-        <InputFormOrganisms
+        <SignInForm
           :formItem="props.formItem"
           :reset="props.passwordListItem"
         />
