@@ -17,7 +17,9 @@ defineProps<{
   inductionSignIn: inductionSignIn;
 }>();
 
-const alertState = useAlertState();
+const { alertState, resetAlertState } = useAlertState();
+
+resetAlertState();
 </script>
 <template>
   <div>
@@ -28,7 +30,7 @@ const alertState = useAlertState();
       />
       <CardContent>
         <Alertbox
-          v-if="alertState.alertState.value"
+          v-if="alertState"
           :title="alertItem.title"
           :description="alertItem.description"
         />

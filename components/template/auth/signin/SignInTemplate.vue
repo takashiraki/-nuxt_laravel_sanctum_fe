@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useAlertState } from "~/composables/states/form/AlertState";
 import { useSignInFormState } from "~/composables/states/form/SignInFormState";
 import type { AlertItemInterface } from "~/types/alert/AlertItemInterface";
 import type { CardItemInterface } from "~/types/card/CardItemInterface";
@@ -31,6 +32,10 @@ interface propsItem {
 const props = defineProps<propsItem>();
 
 const signInFormState = useSignInFormState();
+
+const { resetAlertState } = useAlertState();
+
+resetAlertState();
 </script>
 <template>
   <div>

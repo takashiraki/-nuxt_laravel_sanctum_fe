@@ -42,7 +42,7 @@ const post = handleSubmit(async (values) => {
     });
 
     navigateTo({
-      path: "/password-reset-requested",
+      path: "/auth/forgot-password/request-complete",
     });
   } catch (error: any) {
     setAlertFailed();
