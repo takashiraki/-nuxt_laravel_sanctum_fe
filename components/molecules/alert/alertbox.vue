@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { AlertCircle } from "lucide-vue-next";
 import type { AlertItemInterface } from "~/types/alert/AlertItemInterface";
 
 const props = defineProps<AlertItemInterface>();

@@ -16,12 +16,12 @@ const props = defineProps<{
       <FormItem>
         <div class="flex items-center">
           <Label>{{ props.item.label }}</Label>
-          <a
-            :href="props.reset.link"
+          <NuxtLink
+            :to="props.reset.link"
             class="ml-auto inline-block text-sm underline"
           >
             {{ props.reset.title }}
-          </a>
+          </NuxtLink>
         </div>
         <FormControl>
           <Input

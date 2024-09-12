@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import { Loader2 } from "lucide-vue-next";
 import { useButtonLoadingState } from "~/composables/states/button/loadingButtonState";
-
-interface ButtonItemInterface {
-  type: string;
-  label: string;
-  class: string | null;
-}
+import type { ButtonItemInterface } from "~/types/button/ButtonItemInterface";
 
 const propsItem = defineProps<ButtonItemInterface>();
 
